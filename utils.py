@@ -1,4 +1,5 @@
 import os
+import shutil
 import glob
 import sys
 import argparse
@@ -67,6 +68,7 @@ def stretch(mel, width): # 0.5-2
 
 
 def load_checkpoint(checkpoint_path, model, optimizer=None, strict=False):
+  print(checkpoint_path)
   assert os.path.isfile(checkpoint_path)
   checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
   iteration = checkpoint_dict['iteration']
@@ -223,6 +225,43 @@ def get_hparams(init=True):
   hparams.model_dir = model_dir
   return hparams
 
+def get_hparams_finetune(init=True):
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-c', '--config', type=str, default="./configs/base.json",
+                      help='JSON file for configuration')
+  parser.add_argument('-m', '--model_name', type=str, required=True,
+                      help='Model name (output)')
+  parser.add_argument('-d', '--discriminator', type=str, required=True, default="./checkpoints/D-freevc.pth",
+                      help='Discriminator net to be used as base')
+  parser.add_argument('-g', '--generator', type=str, required=True, default="./checkpoints/freevc.pth",
+                      help='Generator net to be used as base')
+  parser.add_argument('-f', '--force_new', action='store_true', default=False,
+                      help='Ignore existing finetuned models with the same name. Will delete existing checkpoints of equally named models.')
+  args = parser.parse_args()
+  model_dir = os.path.join("./logs", args.model_name)
+  if args.force_new and os.path.exists(model_dir):
+    shutil.rmtree(model_dir)
+  if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
+
+  config_path = args.config
+  config_save_path = os.path.join(model_dir, "config.json")
+  if init:
+    with open(config_path, "r") as f:
+      data = f.read()
+    with open(config_save_path, "w") as f:
+      f.write(data)
+  else:
+    with open(config_save_path, "r") as f:
+      data = f.read()
+  config = json.loads(data)
+  
+  hparams = HParams(**config)
+  hparams.model_dir = model_dir
+  hparams.generator = args.generator
+  hparams.discriminator = args.discriminator
+  hparams.force_new = args.force_new
+  return hparams
 
 def get_hparams_from_dir(model_dir):
   config_save_path = os.path.join(model_dir, "config.json")

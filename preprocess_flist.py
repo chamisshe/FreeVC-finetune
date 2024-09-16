@@ -18,11 +18,31 @@ if __name__ == "__main__":
     idx = 0
     
     for speaker in tqdm(os.listdir(args.source_dir)):
-        wavs = os.listdir(os.path.join(args.source_dir, speaker))
+        
+        _wavs = os.listdir(os.path.join(args.source_dir, speaker))
+        wavs = [file for file in _wavs if file.endswith(".wav")]
+        ###
+        # number of chunks
+        total_len = len(wavs)
+        # arbitrary but seemingly reasonable lower limit defining the minimal number of chunks: 
+        assert total_len>=10, "message something"
+        # num test set
+        n_test = max(round(total_len*0.05), 1)
+        # num val set
+        n_val = max(round(total_len*0.01), 1)
+        # num train set
+        n_train = total_len-(n_test+n_val)
+        # just making sure
+        assert total_len == n_test+n_val+n_train
+
         shuffle(wavs)
-        train += wavs[2:-10]
-        val += wavs[:2]
-        test += wavs[-10:]
+        
+        train += wavs[n_val:-n_test]
+        val += wavs[:n_val]
+        test += wavs[-n_test:]
+        # train += wavs[2:-10]
+        # val += wavs[:2]
+        # test += wavs[-10:]
         
     shuffle(train)
     shuffle(val)

@@ -10,8 +10,11 @@ from tqdm import tqdm
 def process(wav_name):
     # speaker 's5', 'p280', 'p315' are excluded,
     speaker = wav_name[:4]
+    print(speaker)
     wav_path = os.path.join(args.in_dir, speaker, wav_name)
+    print(wav_path)
     if os.path.exists(wav_path) and '_mic2.flac' in wav_path:
+        print("processing ", wav_path)
         os.makedirs(os.path.join(args.out_dir1, speaker), exist_ok=True)
         os.makedirs(os.path.join(args.out_dir2, speaker), exist_ok=True)
         wav, sr = librosa.load(wav_path)

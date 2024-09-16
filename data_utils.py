@@ -48,6 +48,7 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         self.lengths = lengths
 
     def get_audio(self, filename):
+        print("filename: ",filename)
         audio, sampling_rate = load_wav_to_torch(filename)
         if sampling_rate != self.sampling_rate:
             raise ValueError("{} SR doesn't match target {} SR".format(
@@ -56,7 +57,15 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         audio_norm = audio_norm.unsqueeze(0)
         spec_filename = filename.replace(".wav", ".spec.pt")
         if os.path.exists(spec_filename):
-            spec = torch.load(spec_filename)
+            # there was some loading issue, the try-except statement bypasses said error
+            try:
+                spec = torch.load(spec_filename)
+            except RuntimeError:
+                spec = spectrogram_torch(audio_norm, self.filter_length,
+                self.sampling_rate, self.hop_length, self.win_length,
+                center=False)
+                spec = torch.squeeze(spec, 0)
+                torch.save(spec, spec_filename)
         else:
             spec = spectrogram_torch(audio_norm, self.filter_length,
                 self.sampling_rate, self.hop_length, self.win_length,
@@ -215,7 +224,7 @@ class DistributedBucketSampler(torch.utils.data.distributed.DistributedSampler):
             if idx_bucket != -1:
                 buckets[idx_bucket].append(i)
   
-        for i in range(len(buckets) - 1, 0, -1):
+        for i in range(len(buckets) - 1, -1, -1):
             if len(buckets[i]) == 0:
                 buckets.pop(i)
                 self.boundaries.pop(i+1)

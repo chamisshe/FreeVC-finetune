@@ -94,7 +94,7 @@ if __name__ == "__main__":
     hps = utils.HParams(**config)
 
     filenames = glob(f'{args.in_dir}/*/*.wav', recursive=True)#[:10]
-    
+    print(filenames)
     for filename in tqdm(filenames):
         process(filename)
     
