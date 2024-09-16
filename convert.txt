@@ -1,2 +1,2 @@
-title1|DUMMY/p225/p225_001.wav|DUMMY/p226/p226_002.wav
-title2|DUMMY/p226/p226_002.wav|DUMMY/p225/p225_001.wav
+test_bernie1|LN_AUDIOFILES/micha_1.wav|LN_AUDIOFILES/bernie_filibuster_22sec.wav
+test_bernie2|LN_AUDIOFILES/micha_2.wav|LN_AUDIOFILES/bernie_filibuster_22sec.wav
