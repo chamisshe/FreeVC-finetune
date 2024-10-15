@@ -24,8 +24,8 @@ if __name__ == "__main__":
         ###
         # number of chunks
         total_len = len(wavs)
-        # arbitrary but seemingly reasonable lower limit defining the minimal number of chunks:  OPTIONAL, uncomment if necessary
-        # assert total_len>=10, "message something"
+        # arbitrary but seemingly reasonable lower limit defining the minimal number of chunks: 
+        assert total_len>=10, "message something"
         # num test set
         n_test = max(round(total_len*0.05), 1)
         # num val set

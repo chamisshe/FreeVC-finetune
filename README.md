@@ -7,7 +7,7 @@ FreeVC is an open source **Voice Conversion** model, released in 2022 ([Code](ht
 >
 >**<summary>What is Voice Conversion?</summary>**
 > 
-> The goal of voice conversion is to make a recorded utterance of *speaker A* sound like it's being said by *speaker B*. To do so, we essentially want to remove the speaker-specific features of speaker A from the recording, and replace them with speaker B's features. This is different from similar technology such as voice cloning, which achieves a similar output, but on the basis of text-to-speech.
+> The goal of voice conversion is to make a recorded utterance by *speaker A* sound like it's being said by *speaker B*. To do so, we essentially want to remove the speaker-specific features of speaker A from the recording, and replace them with speaker B's features. This is different from similar technology such as voice cloning, which achieves a similar output, but is still text-to-speech.
 >
 ></details>
 
