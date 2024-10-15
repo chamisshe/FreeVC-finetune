@@ -1,3 +1,0 @@
-DUMMY/brn1/brn1-7.wav
-DUMMY/brn1/brn1-18.wav
-DUMMY/brn1/brn1-39.wav

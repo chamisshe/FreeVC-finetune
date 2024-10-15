@@ -112,7 +112,9 @@ def run(rank, n_gpus, hps):
     # load existing checkpoints, continue training those
     _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
     _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
-    global_step = (epoch_str - 1) * len(train_loader)
+    # but reset the following to the same state as if training from scratch. we do not care about old epochs.
+    epoch_str = 1
+    global_step = 0
   # start a fresh new finetuning process
   except:
     _ = utils.load_checkpoint(hps.generator, net_g, optim_g)
