@@ -68,7 +68,6 @@ def stretch(mel, width): # 0.5-2
 
 
 def load_checkpoint(checkpoint_path, model, optimizer=None, strict=False):
-  print(checkpoint_path)
   assert os.path.isfile(checkpoint_path)
   checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
   iteration = checkpoint_dict['iteration']
@@ -204,7 +203,7 @@ def get_hparams(init=True):
                       help='Model name')
   
   args = parser.parse_args()
-  model_dir = os.path.join("./logs", args.model)
+  model_dir = os.path.join("./checkpoints", args.model)
 
   if not os.path.exists(model_dir):
     os.makedirs(model_dir)
@@ -238,7 +237,7 @@ def get_hparams_finetune(init=True):
   parser.add_argument('-f', '--force_new', action='store_true', default=False,
                       help='Ignore existing finetuned models with the same name. Will delete existing checkpoints of equally named models.')
   args = parser.parse_args()
-  model_dir = os.path.join("./logs", args.model_name)
+  model_dir = os.path.join("./checkpoints", args.model_name)
   if args.force_new and os.path.exists(model_dir):
     shutil.rmtree(model_dir)
   if not os.path.exists(model_dir):

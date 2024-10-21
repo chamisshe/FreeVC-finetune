@@ -16,6 +16,7 @@ def build_from_path(in_dir, out_dir, weights_fpath, num_workers=1):
     executor = ProcessPoolExecutor(max_workers=num_workers)
     futures = []
     wavfile_paths = glob.glob(os.path.join(in_dir, '*.wav'))
+    print(wavfile_paths)
     wavfile_paths= sorted(wavfile_paths)
     for wav_path in wavfile_paths:
         futures.append(executor.submit(

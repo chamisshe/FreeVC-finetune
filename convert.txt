@@ -1,2 +1,1 @@
-test_bernie1|LN_AUDIOFILES/micha_1.wav|LN_AUDIOFILES/bernie_filibuster_22sec.wav
-test_bernie2|LN_AUDIOFILES/micha_2.wav|LN_AUDIOFILES/bernie_filibuster_22sec.wav
+EXAMPLE|resources/audio/EXAMPLE_SOURCE.wav|resources/audio/EXAMPLE_TARGET.wav
