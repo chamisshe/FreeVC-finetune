@@ -103,6 +103,7 @@ def run(rank, n_gpus, hps):
   net_g = DDP(net_g, device_ids=[rank])#, find_unused_parameters=True)
   net_d = DDP(net_d, device_ids=[rank])
 
+# WHERE THE FINE-TUNING MAGIC HAPPENS:
   # continue fine-tuning an existing model
   try:
     # if the --force_new flag is set, don't use any existing training checkpoints and start with the base-model again
