@@ -49,3 +49,17 @@ Otherwise, install it as follows:
 sudo apt update
 sudo apt install ffmpeg
 ```
+
+#### Venv
+
+Next, as is standard procedure, we want to install the required modules inside a Virtual Environment (or venv). Because different projects have different dependencies, we want to keep them from interfering with each other.
+
+```python
+python3.9 -m venv .venv-freevc && source ./.venv-freevc/bin/activate
+```
+
+For now, only install the `ipykernel` package, which allows us to run Jupyter. The remaining requirements will be installed when running the notebook.
+
+```python
+pip install ipykernel
+```
